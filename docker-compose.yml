@@ -9,12 +9,12 @@ services:
     image: deep-searcher
     container_name: deep-searcher
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
     restart: unless-stopped
     volumes:
       - ./config.yaml:/app/deep-searcher/config.yaml
     depends_on:
-      - milvus
+      - milvus-standalone
 
   etcd:
     container_name: milvus-etcd
@@ -26,7 +26,7 @@ services:
       - ETCD_SNAPSHOT_COUNT=50000
     volumes:
       - ./volumes/etcd:/etcd
-    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+    command: etcd -advertise-client-urls=http://etcd:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
     healthcheck:
       test: ["CMD", "etcdctl", "endpoint", "health"]
       interval: 30s

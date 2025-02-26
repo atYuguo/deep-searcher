@@ -19,8 +19,8 @@ WORKDIR /app/deep-searcher
 # Install dependencies
 RUN pip install -e .
 
-# Install unstructured-ingest
-RUN pip install unstructured-ingest
+# Install unstructured-ingest with all document format support in one command
+RUN pip install "unstructured-ingest[csv,doc,docx,epub,md,msg,odt,org,pdf,ppt,pptx,rtf,rst,tsv,xlsx,milvus,openai]"
 
 # Run the application
 CMD ["python", "main.py"] 
